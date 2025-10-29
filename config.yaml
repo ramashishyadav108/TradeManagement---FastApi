@@ -1,0 +1,128 @@
+# Configuration settings for matching engine
+# YAML format for advanced configuration
+
+# Server Configuration
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+  workers: 1
+
+# WebSocket Configuration
+websocket:
+  heartbeat_interval: 30
+  max_connections: 100
+  message_queue_size: 1000
+
+# Matching Engine Configuration
+matching_engine:
+  symbols:
+    - BTC-USDT
+    - ETH-USDT
+    - SOL-USDT
+    - DOGE-USDT
+  
+  price_precision:
+    BTC-USDT: 2
+    ETH-USDT: 2
+    SOL-USDT: 3
+    DOGE-USDT: 6
+  
+  quantity_precision:
+    BTC-USDT: 8
+    ETH-USDT: 8
+    SOL-USDT: 6
+    DOGE-USDT: 2
+  
+  max_price_levels: 100
+  max_orders_per_level: 1000
+
+# Logging Configuration
+logging:
+  level: INFO
+  format: json
+  rotation:
+    enabled: true
+    when: midnight
+    interval: 1
+    backup_count: 7
+  
+  files:
+    application: logs/application.log
+    trades: logs/trades.log
+    orders: logs/orders.log
+    errors: logs/errors.log
+    performance: logs/performance.log
+
+# Performance Configuration
+performance:
+  max_orders_per_second: 1000
+  latency_target_ms: 1.0
+  memory_limit_mb: 1000
+  
+  monitoring:
+    enabled: true
+    interval_seconds: 60
+    metrics_file: logs/metrics.json
+
+# Rate Limiting
+rate_limiting:
+  enabled: true
+  per_ip:
+    requests_per_minute: 60
+    burst: 10
+  per_api_key:
+    requests_per_minute: 1000
+    burst: 100
+
+# CORS Configuration
+cors:
+  allowed_origins:
+    - http://localhost:8501
+    - http://localhost:3000
+  allowed_methods:
+    - GET
+    - POST
+    - DELETE
+  allowed_headers:
+    - "*"
+  allow_credentials: true
+
+# Database Configuration (optional)
+database:
+  enabled: false
+  url: "postgresql://user:password@localhost/trading_db"
+  pool_size: 10
+  max_overflow: 20
+
+# Redis Configuration (optional)
+redis:
+  enabled: false
+  host: localhost
+  port: 6379
+  db: 0
+  password: null
+
+# Security Configuration
+security:
+  api_keys_enabled: false
+  jwt_enabled: false
+  secret_key: "change-this-in-production"
+  token_expiry_hours: 24
+
+# Features
+features:
+  order_types:
+    - market
+    - limit
+    - ioc
+    - fok
+  
+  websocket_channels:
+    - orderbook
+    - trades
+    - orders
+  
+  rest_api_enabled: true
+  websocket_enabled: true
+  metrics_api_enabled: true
